@@ -1,6 +1,7 @@
 //https://github.com/etrupja/complete-ecommerce-aspnet-mvc-application
 
 using eTickets.Data;
+using eTickets.Data.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddControllersWithViews();
+//add actor service
+builder.Services.AddScoped<IActorsService, ActorsService>();
 
 var app = builder.Build();
 
