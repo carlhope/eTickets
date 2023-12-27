@@ -20,6 +20,17 @@ namespace eTickets.Controllers
             return View(allMovies);
         }
 
+        public async Task<IActionResult> Filter(string searchString)
+        {
+            var allMovies = await _service.GetAllAsync(n => n.Cinema);
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                var filteredResults = allMovies.Where(n=>n.Name.Contains(searchString)||n.Description.Contains(searchString)).ToList();
+                return View("Index",filteredResults);
+            }
+            return View("Index", allMovies);
+        }
+
         //Get: Movies/Details/1
         public async Task<IActionResult> Details(int id)
         {
