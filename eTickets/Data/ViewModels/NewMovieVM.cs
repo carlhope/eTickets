@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eTickets.Data.ViewModels
 {
-    public class NewMoviesVM
+    public class NewMovieVM
     {
         [Display(Name = "Movie name")]
         [Required(ErrorMessage ="Name is required")]
