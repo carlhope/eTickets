@@ -2,12 +2,14 @@
 using eTickets.Data.Static;
 using eTickets.Data.ViewModels;
 using eTickets.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace eTickets.Controllers
 {
+    
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -21,14 +23,16 @@ namespace eTickets.Controllers
 
             
         }
-
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> Users()
         {
             var users = await _context.Users.ToListAsync();
             return View(users);
         }
+       
         public IActionResult Login() => View(new LoginVM());
         [HttpPost]
+        
         public async Task<IActionResult> Login(LoginVM loginVM)
         {
             if(!ModelState.IsValid) return View(loginVM);
@@ -78,11 +82,13 @@ namespace eTickets.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index","Movies");
         }
+        [Authorize]
         public IActionResult AccessDenied()
         {
             return View();
