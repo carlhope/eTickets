@@ -20,21 +20,24 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <!-- edited here  -->
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Movies" asp-action="Index"><i class="badge-info bi-film"></i>Movies</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="bi bi-gear"></i>Management
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-controller="Cinemas" asp-action="Index"><i class="bg-info bi-camera-reels"></i>Cinemas</a>
-                                <a class="dropdown-item" asp-controller="Producers" asp-action="Index"><i class="bg-info bi-headset"></i>Producers</a>
-                                <a class="dropdown-item" asp-controller="Actors" asp-action="Index"><i class="bg-info bi-person-square"></i>Actors</a>
+                        @if(User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="bi bi-gear"></i>Management
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-controller="Cinemas" asp-action="Index"><i class="bg-info bi-camera-reels"></i>Cinemas</a>
+                                    <a class="dropdown-item" asp-controller="Producers" asp-action="Index"><i class="bg-info bi-headset"></i>Producers</a>
+                                    <a class="dropdown-item" asp-controller="Actors" asp-action="Index"><i class="bg-info bi-person-square"></i>Actors</a>
 
-                            </div>
-                        </li>
+                                </div>
+                            </li>
+                        }
+
                         
                     </ul>
                     <form asp-controller="Movies" asp-action="Filter" style="padding-right:25px;">
@@ -50,18 +53,7 @@
                     <ul class="navbar-nav">
                         @await Component.InvokeAsync("ShoppingCartSummary")
                     </ul>
-                    @* User profile section *@
-                    <div class="dropdown">
-                        <button class="btn btn-outline-success dropdown-toggle" type="button" id="profile-btn" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-badge"></i> Hello User
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="profile-btn">
-                            <li>
-                                <a class="dropdown-item" asp-controller="Orders" asp-action="Index"><i class="bi bi-list"></i>Orders</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <!--To here-->
+                    <partial name="_Identity.cshtml"/>
                 </div>
             </div>
         </nav>
