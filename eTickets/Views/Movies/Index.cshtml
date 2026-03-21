@@ -38,11 +38,11 @@
                             <p class="card-text"><b>End Date: </b>@item.EndDate.ToString("dd MMM yy")</p>
                             <p class="card-text ">
                                 <b>Status: </b>
-                                @if (DateTime.Now >= item.StartDate && DateTime.Now <= item.EndDate)
+                                @if (DateTime.UtcNow >= item.StartDate && DateTime.UtcNow <= item.EndDate)
                                 {
                                     <span class="badge bg-success text-white">AVAILABLE</span>
                                 }
-                                else if (DateTime.Now > item.EndDate)
+                                else if (DateTime.UtcNow > item.EndDate)
                                 {
                                     <span class="badge bg-danger text-white">EXPIRED</span>
                                 }
@@ -58,7 +58,7 @@
                         <div class="card-footer ">
                             <p class="card-text">
                                 <a class="btn btn-outline-primary float-end" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-eye-fill"></i> Show Details</a>
-                                <a class="btn btn-success text-white @((DateTime.Now > item.EndDate)?"disabled":"")" asp-controller="Orders" asp-action="AddToShoppingCart" asp-route-id="@item.Id"><i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))</a>
+                                <a class="btn btn-success text-white @((DateTime.UtcNow > item.EndDate)?"disabled":"")" asp-controller="Orders" asp-action="AddToShoppingCart" asp-route-id="@item.Id"><i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))</a>
                             </p>
                         </div>
                     </div>
